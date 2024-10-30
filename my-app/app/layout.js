@@ -40,6 +40,12 @@ const playfairDisplay = Playfair_Display({
   weight: ['400', '500', '600', '700']
 });
 
+// Add Berlin Sans FB font
+const berlinSansFB = {
+  fontFamily: 'Berlin Sans FB',
+  src: `url('/fonts/BRLNSR.woff2') format('woff2')`
+};
+
 function NavBar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const theme = useTheme();
@@ -109,7 +115,7 @@ function NavBar() {
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
               <Image
                 src="/images/logo/logo.png"
-                alt="Moroccan Kitchen Co Logo"
+                alt="MoroccanKitchenCo Logo"
                 width={isMobile ? 50 : 60}
                 height={isMobile ? 50 : 60}
                 style={{ objectFit: 'contain' }}
@@ -117,13 +123,14 @@ function NavBar() {
               <Typography 
                 variant={isMobile ? "h5" : "h4"} 
                 sx={{ 
-                  fontFamily: 'Playfair Display',
-                  color: '#2b2b2b',
-                  fontWeight: 600,
-                  display: { xs: 'none', sm: 'block' }
+                  fontFamily: 'Berlin Sans FB, Arial',
+                  color: '#c7923e',
+                  fontWeight: 700,
+                  display: { xs: 'none', sm: 'block' },
+                  letterSpacing: '-0.5px'
                 }}
               >
-                Moroccan Kitchen Co
+                MoroccanKitchenCo
               </Typography>
             </Box>
           </Link>
@@ -191,6 +198,17 @@ function NavBar() {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={playfairDisplay.className}>
+      <head>
+        <style jsx global>{`
+          @font-face {
+            font-family: 'Berlin Sans FB';
+            src: url('/fonts/BRLNSR.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+          }
+        `}</style>
+      </head>
       <body style={{ margin: 0 }}>
         <NavBar />
         <Box sx={{ pt: '90px' }}>{children}</Box>

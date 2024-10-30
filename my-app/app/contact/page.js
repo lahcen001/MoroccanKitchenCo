@@ -50,8 +50,18 @@ export default function Contact() {
     <>
       <Container maxWidth="lg">
         <Box sx={{ my: 4 }}>
-          <Typography variant="h3" component="h1" gutterBottom sx={{ textAlign: 'center' }}>
-            Contact Us
+          <Typography 
+            variant="h3" 
+            component="h1" 
+            gutterBottom 
+            sx={{ 
+              textAlign: 'center',
+              fontFamily: 'Berlin Sans FB, Arial',
+              color: '#c7923e',
+              fontWeight: 700
+            }}
+          >
+            Contact MoroccanKitchenCo
           </Typography>
           
           <Grid container spacing={6} sx={{ mt: 2 }}>

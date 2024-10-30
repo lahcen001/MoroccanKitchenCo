@@ -8,8 +8,17 @@ export default function About() {
     <>
       <Container maxWidth="lg">
         <Box sx={{ my: 4 }}>
-          <Typography variant="h3" component="h1" gutterBottom>
-            About Moroccan Kitchen Co
+          <Typography 
+            variant="h3" 
+            component="h1" 
+            gutterBottom
+            sx={{ 
+              fontFamily: 'Berlin Sans FB, Arial',
+              color: '#c7923e',
+              fontWeight: 700
+            }}
+          >
+            About MoroccanKitchenCo
           </Typography>
           
           <Paper sx={{ p: 4, mt: 4 }}>

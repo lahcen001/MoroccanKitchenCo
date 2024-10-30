@@ -231,8 +231,18 @@ export default function Products() {
             px: { xs: 2, md: 6 },
             ml: { xs: 0, md: 4 }
           }}>
-            <Typography variant="h3" component="h1" gutterBottom sx={{ pl: 2 }}>
-              Our Products
+            <Typography 
+              variant="h3" 
+              component="h1" 
+              gutterBottom 
+              sx={{ 
+                pl: 2,
+                fontFamily: 'Berlin Sans FB, Arial',
+                color: '#c7923e',
+                fontWeight: 700
+              }}
+            >
+              MoroccanKitchenCo Products
             </Typography>
 
             {/* Search and Sort Controls */}

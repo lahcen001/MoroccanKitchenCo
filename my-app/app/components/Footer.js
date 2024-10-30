@@ -15,13 +15,20 @@ export default function Footer() {
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
               <Image
                 src="/images/logo/logo.png"
-                alt="Moroccan Kitchen Co Logo"
+                alt="MoroccanKitchenCo Logo"
                 width={50}
                 height={50}
                 style={{ objectFit: 'contain' }}
               />
-              <Typography variant="h6" sx={{ fontFamily: 'Playfair Display' }}>
-                Moroccan Kitchen Co
+              <Typography 
+                variant="h6" 
+                sx={{ 
+                  fontFamily: 'Berlin Sans FB, Arial',
+                  color: 'white',
+                  fontWeight: 700
+                }}
+              >
+                MoroccanKitchenCo
               </Typography>
             </Box>
             <Typography variant="body2" sx={{ mb: 2 }}>
@@ -76,7 +83,7 @@ export default function Footer() {
         <Divider sx={{ my: 3, borderColor: 'rgba(255, 255, 255, 0.1)' }} />
         
         <Typography variant="body2" align="center" sx={{ pt: 2 }}>
-          © {new Date().getFullYear()} Moroccan Kitchen Co. Supporting artisans and preserving traditions.
+          © {new Date().getFullYear()} MoroccanKitchenCo. Supporting artisans and preserving traditions.
         </Typography>
       </Container>
     </Box>
