@@ -29,6 +29,58 @@ import SortIcon from '@mui/icons-material/Sort';
 import { useTheme } from '@mui/material/styles';
 import Footer from '../components/Footer';
 
+// Static product data
+const staticProducts = [
+  {
+    listing_id: 1,
+    title: 'Traditional Moroccan Tagine',
+    description: 'Handcrafted clay cooking pot perfect for slow-cooking stews, meats, and vegetables. Authentic Moroccan design with intricate patterns.',
+    price: { amount: 4999, divisor: 100 },
+    url: 'https://www.etsy.com',
+    images: [{ url_570xN: 'https://images.unsplash.com/photo-1578678809532-6e7da45c07e4' }]
+  },
+  {
+    listing_id: 2,
+    title: 'Moroccan Tea Set',
+    description: 'Complete silver-plated tea service including teapot, tray, and 6 traditional glasses. Perfect for serving authentic Moroccan mint tea.',
+    price: { amount: 8999, divisor: 100 },
+    url: 'https://www.etsy.com',
+    images: [{ url_570xN: 'https://images.unsplash.com/photo-1577968897966-3d4325b36b61' }]
+  },
+  {
+    listing_id: 3,
+    title: 'Handmade Ceramic Plates Set',
+    description: 'Set of 4 hand-painted ceramic plates with traditional Moroccan patterns. Perfect for serving or as decorative pieces.',
+    price: { amount: 6999, divisor: 100 },
+    url: 'https://www.etsy.com',
+    images: [{ url_570xN: 'https://images.unsplash.com/photo-1578670812003-60745e2c2ea9' }]
+  },
+  {
+    listing_id: 4,
+    title: 'Moroccan Spice Collection',
+    description: 'Premium selection of authentic Moroccan spices including Ras el Hanout, Saffron, and other traditional blends.',
+    price: { amount: 3499, divisor: 100 },
+    url: 'https://www.etsy.com',
+    images: [{ url_570xN: 'https://images.unsplash.com/photo-1596797038530-2c107229654b' }]
+  },
+  {
+    listing_id: 5,
+    title: 'Copper Tea Kettle',
+    description: 'Hand-beaten copper kettle with traditional Moroccan design. Perfect for preparing authentic Moroccan mint tea.',
+    price: { amount: 5999, divisor: 100 },
+    url: 'https://www.etsy.com',
+    images: [{ url_570xN: 'https://images.unsplash.com/photo-1579027989536-b7b1f875659b' }]
+  },
+  {
+    listing_id: 6,
+    title: 'Moroccan Serving Tagine',
+    description: 'Decorative serving tagine with intricate hand-painted designs. Perfect for presenting traditional Moroccan dishes.',
+    price: { amount: 7999, divisor: 100 },
+    url: 'https://www.etsy.com',
+    images: [{ url_570xN: 'https://images.unsplash.com/photo-1547637589-f54c34f5d7a4' }]
+  }
+];
+
 export default function Products() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -44,23 +96,9 @@ export default function Products() {
   const productsPerPage = 6;
 
   useEffect(() => {
-    fetchEtsyProducts();
+    setProducts(staticProducts);
+    setLoading(false);
   }, []);
-
-  const fetchEtsyProducts = async () => {
-    try {
-      const response = await fetch('/api/etsy/products');
-      if (!response.ok) {
-        throw new Error('Failed to fetch products');
-      }
-      const data = await response.json();
-      setProducts(data);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handlePriceChange = (event, newValue) => {
     setPriceRange(newValue);

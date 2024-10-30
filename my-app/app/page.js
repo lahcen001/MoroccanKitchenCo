@@ -1,7 +1,21 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Container, Typography, Box, Grid, Card, CardContent, CardMedia, Paper, Divider, Button } from '@mui/material';
+import { 
+  Container, 
+  Typography, 
+  Box, 
+  Grid, 
+  Card, 
+  CardContent, 
+  CardMedia, 
+  Paper, 
+  Divider, 
+  Button,
+  Grow,
+  Fade,
+  Zoom
+} from '@mui/material';
 import { useRouter } from 'next/navigation';
 import Footer from './components/Footer';
 import Image from 'next/image';
@@ -30,40 +44,93 @@ const featuredProducts = [
     name: 'Traditional Tagine',
     description: 'Handcrafted clay cooking pot perfect for slow-cooking stews, meats, and vegetables.',
     price: 49.99,
-    image: '/images/tagine.jpg',
+    image: 'https://images.unsplash.com/photo-1578678809532-6e7da45c07e4',
     category: 'Cookware',
     etsyUrl: 'https://www.etsy.com/listing/your-tagine-listing'
   },
   {
-    id: 7,
+    id: 2,
     name: 'Luxury Tea Set',
     description: 'Complete silver-plated tea service including teapot, tray, and 6 traditional glasses.',
     price: 89.99,
-    image: '/images/tea-set.jpg',
+    image: 'https://images.unsplash.com/photo-1577968897966-3d4325b36b61',
     category: 'Tea & Coffee',
     etsyUrl: 'https://www.etsy.com/listing/your-tea-set-listing'
   },
   {
-    id: 4,
-    name: 'Premium Ras el Hanout',
-    description: 'Our signature blend of 27 spices including saffron, rose petals, cinnamon, and cumin.',
-    price: 14.99,
-    image: '/images/ras-el-hanout.jpg',
+    id: 3,
+    name: 'Moroccan Spice Collection',
+    description: 'Premium selection of authentic Moroccan spices including Ras el Hanout and Saffron.',
+    price: 34.99,
+    image: 'https://images.unsplash.com/photo-1596797038530-2c107229654b',
     category: 'Spices',
     etsyUrl: 'https://www.etsy.com/listing/your-spice-listing'
+  }
+];
+
+const categoryImages = [
+  {
+    name: 'Cookware',
+    image: 'https://images.unsplash.com/photo-1578678809532-6e7da45c07e4', // Tagine image
+    description: 'Traditional Moroccan Cookware'
+  },
+  {
+    name: 'Spices',
+    image: 'https://images.unsplash.com/photo-1596797038530-2c107229654b', // Spices image
+    description: 'Authentic Moroccan Spices'
+  },
+  {
+    name: 'Tea Sets',
+    image: 'https://images.unsplash.com/photo-1577968897966-3d4325b36b61', // Tea set image
+    description: 'Handcrafted Tea Sets'
+  },
+  {
+    name: 'Tableware',
+    image: 'https://images.unsplash.com/photo-1578670812003-60745e2c2ea9', // Ceramic plates image
+    description: 'Artisanal Tableware'
   }
 ];
 
 export default function Home() {
   const router = useRouter();
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isVisible, setIsVisible] = useState({
+    story: false,
+    products: false,
+    categories: false,
+    cta: false
+  });
 
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % sliderImages.length);
     }, 5000);
 
-    return () => clearInterval(timer);
+    // Intersection Observer for animations
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            setIsVisible(prev => ({
+              ...prev,
+              [entry.target.id]: true
+            }));
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    // Observe sections
+    ['story', 'products', 'categories', 'cta'].forEach(id => {
+      const element = document.getElementById(id);
+      if (element) observer.observe(element);
+    });
+
+    return () => {
+      clearInterval(timer);
+      observer.disconnect();
+    };
   }, []);
 
   const handleBuyOnEtsy = (etsyUrl) => {
@@ -72,7 +139,7 @@ export default function Home() {
 
   return (
     <Box maxWidth="100%">
-      {/* Hero Section with Slider */}
+      {/* Hero Section with Enhanced Slider */}
       <Box 
         sx={{ 
           position: 'relative',
@@ -82,68 +149,72 @@ export default function Home() {
         }}
       >
         {sliderImages.map((slide, index) => (
-          <Box
-            key={index}
-            sx={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              opacity: currentSlide === index ? 1 : 0,
-              transition: 'opacity 0.5s ease-in-out',
-            }}
+          <Fade 
+            key={index} 
+            in={currentSlide === index} 
+            timeout={1000}
           >
             <Box
               sx={{
-                position: 'relative',
+                position: 'absolute',
+                top: 0,
+                left: 0,
                 width: '100%',
                 height: '100%',
+                display: currentSlide === index ? 'block' : 'none'
               }}
             >
-              <Image
-                src={slide.url}
-                alt={slide.title}
-                fill
-                style={{
-                  objectFit: 'cover',
-                  objectPosition: 'center',
-                }}
-                priority={index === 0} // Load first image immediately
-              />
               <Box
                 sx={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  backgroundColor: 'rgba(0, 0, 0, 0.4)',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  color: 'white',
-                  textAlign: 'center',
-                  px: 4
+                  position: 'relative',
+                  width: '100%',
+                  height: '100%',
                 }}
               >
-                <Typography 
-                  variant="h1" 
-                  sx={{ 
-                    mb: 2,
-                    fontFamily: 'Playfair Display, serif',
-                    fontSize: { xs: '2.5rem', md: '4rem' }
+                <Image
+                  src={slide.url}
+                  alt={slide.title}
+                  fill
+                  style={{
+                    objectFit: 'cover',
+                    objectPosition: 'center',
+                  }}
+                  priority={index === 0} // Load first image immediately
+                />
+                <Box
+                  sx={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    backgroundColor: 'rgba(0, 0, 0, 0.4)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    color: 'white',
+                    textAlign: 'center',
+                    px: 4
                   }}
                 >
-                  {slide.title}
-                </Typography>
-                <Typography variant="h5" sx={{ mb: 4 }}>
-                  {slide.description}
-                </Typography>
+                  <Typography 
+                    variant="h1" 
+                    sx={{ 
+                      mb: 2,
+                      fontFamily: 'Playfair Display, serif',
+                      fontSize: { xs: '2.5rem', md: '4rem' }
+                    }}
+                  >
+                    {slide.title}
+                  </Typography>
+                  <Typography variant="h5" sx={{ mb: 4 }}>
+                    {slide.description}
+                  </Typography>
+                </Box>
               </Box>
             </Box>
-          </Box>
+          </Fade>
         ))}
         
         {/* Slider Navigation Dots */}
@@ -174,185 +245,272 @@ export default function Home() {
         </Box>
       </Box>
 
-      {/* Story Section */}
-      <Paper elevation={0} sx={{ p: { xs: 2, md: 4 }, mb: 8, backgroundColor: '#faf6f1' }}>
-        <Container maxWidth="lg">
-          <Grid container spacing={4} alignItems="center">
-            <Grid item xs={12} md={6}>
-              <Box 
-                component="img"
-                src="/images/moroccan-kitchen.jpg"
-                alt="Traditional Moroccan Kitchen"
-                sx={{ 
-                  width: '100%',
-                  borderRadius: 2,
-                  boxShadow: 3
-                }}
-              />
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <Typography variant="h3" gutterBottom sx={{ fontFamily: 'Playfair Display, serif' }}>
-                Our Story
-              </Typography>
-              <Typography variant="body1" paragraph>
-                Immerse yourself in the rich culinary traditions of Morocco. Our carefully curated collection brings the warmth and authenticity of Moroccan cooking to your home.
-              </Typography>
-              <Typography variant="body1" paragraph>
-                Each piece in our collection is handpicked from skilled artisans, ensuring you receive only the finest quality traditional cookware and ingredients.
-              </Typography>
-            </Grid>
-          </Grid>
-        </Container>
-      </Paper>
-
-      {/* Featured Products Section */}
-      <Container maxWidth="lg">
-        <Box sx={{ mb: 8 }}>
-          <Typography variant="h3" sx={{ mb: 4, fontFamily: 'Playfair Display, serif', textAlign: 'center' }}>
-            Featured Products
-          </Typography>
-          <Grid container spacing={4}>
-            {featuredProducts.map((product) => (
-              <Grid item xs={12} sm={6} md={4} key={product.id}>
-                <Card sx={{ 
-                  height: '100%', 
-                  display: 'flex', 
-                  flexDirection: 'column',
-                  '&:hover': {
-                    boxShadow: 6
-                  },
-                  transition: 'box-shadow 0.3s ease-in-out'
-                }}>
-                  <CardMedia
-                    component="img"
-                    height="250"
-                    image={product.image}
-                    alt={product.name}
-                  />
-                  <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography variant="overline" display="block" color="primary">
-                      {product.category}
-                    </Typography>
-                    <Typography gutterBottom variant="h5" component="div">
-                      {product.name}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {product.description}
-                    </Typography>
-                    <Typography variant="h6" sx={{ mt: 2, color: '#c7923e' }}>
-                      ${product.price}
-                    </Typography>
-                    <Button 
-                      variant="contained" 
-                      sx={{ 
-                        mt: 2,
-                        backgroundColor: '#c7923e',
-                        '&:hover': {
-                          backgroundColor: '#a67934'
-                        }
+      {/* Story Section with Animation */}
+      <Box id="story">
+        <Grow in={isVisible.story} timeout={1000}>
+          <Paper elevation={0} sx={{ p: { xs: 2, md: 4 }, mb: 8, backgroundColor: '#faf6f1' }}>
+            <Container maxWidth="lg">
+              <Grid container spacing={4} alignItems="center">
+                <Grid item xs={12} md={6}>
+                  <Box
+                    sx={{ 
+                      position: 'relative',
+                      width: '100%',
+                      height: '400px',
+                      borderRadius: 2,
+                      overflow: 'hidden',
+                      boxShadow: 3
+                    }}
+                  >
+                    <Image
+                      src="https://images.unsplash.com/photo-1596797038530-2c107229654b"
+                      alt="Traditional Moroccan Artisan Workshop"
+                      fill
+                      style={{
+                        objectFit: 'cover',
+                        objectPosition: 'center',
                       }}
-                      onClick={() => handleBuyOnEtsy(product.etsyUrl)}
-                      fullWidth
-                    >
-                      Buy on Etsy
-                    </Button>
-                  </CardContent>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        </Box>
-      </Container>
-
-      {/* Categories Preview */}
-      <Box sx={{ mb: 8, px: { xs: 0, md: 0 } }}>
-        <Typography variant="h3" sx={{ mb: 4, fontFamily: 'Playfair Display, serif', textAlign: 'center' }}>
-          Explore Our Categories
-        </Typography>
-        <Grid container spacing={0}>
-          {['Cookware', 'Spices', 'Tea Sets', 'Tableware'].map((category) => (
-            <Grid item xs={12} sm={6} md={3} key={category}>
-              <Paper
-                sx={{
-                  position: 'relative',
-                  height: 200,
-                  backgroundImage: `url(/images/category-${category.toLowerCase().replace(' ', '-')}.jpg)`,
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  cursor: 'pointer',
-                  borderRadius: 0,
-                  '&:hover': {
-                    '& .overlay': {
-                      backgroundColor: 'rgba(0, 0, 0, 0.3)',
-                    }
-                  }
-                }}
-                onClick={() => router.push('/products')}
-              >
-                <Box
-                  className="overlay"
-                  sx={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    transition: 'background-color 0.3s ease-in-out'
-                  }}
-                >
-                  <Typography variant="h5" sx={{ color: 'white', fontWeight: 'bold' }}>
-                    {category}
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                    />
+                  </Box>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Typography variant="h3" gutterBottom sx={{ fontFamily: 'Playfair Display, serif' }}>
+                    Our Story
                   </Typography>
-                </Box>
-              </Paper>
-            </Grid>
-          ))}
-        </Grid>
+                  <Typography variant="body1" paragraph>
+                    Immerse yourself in the rich traditions of Moroccan craftsmanship. Our carefully curated collection 
+                    brings the authentic artistry of Morocco's finest artisans directly to your kitchen.
+                  </Typography>
+                  <Typography variant="body1" paragraph>
+                    Each piece in our collection is handpicked from skilled artisans in Morocco's historic 
+                    craft centers, ensuring you receive only the finest quality traditional kitchenware. 
+                    Every item tells a story of generations of expertise and cultural heritage.
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Container>
+          </Paper>
+        </Grow>
       </Box>
 
-      {/* Call to Action */}
-      <Container maxWidth="lg">
-        <Box 
-          sx={{ 
-            textAlign: 'center',
-            py: 8,
-            px: { xs: 2, md: 4 },
-            backgroundColor: '#faf6f1',
-            borderRadius: 2,
-            mb: 4
-          }}
-        >
-          <Typography variant="h4" gutterBottom sx={{ fontFamily: 'Playfair Display, serif' }}>
-            Explore Our Full Collection
-          </Typography>
-          <Typography variant="body1" color="text.secondary" sx={{ mb: 4, maxWidth: 600, mx: 'auto' }}>
-            Discover our complete range of authentic Moroccan cookware, spices, and accessories. 
-            Transform your kitchen with traditional Moroccan craftsmanship.
-          </Typography>
-          <Button 
-            variant="contained" 
-            size="large"
-            onClick={() => router.push('/products')}
-            sx={{
-              px: 4,
-              py: 1.5,
-              fontSize: '1.1rem',
-              backgroundColor: '#c7923e',
-              '&:hover': {
-                backgroundColor: '#a67934'
-              }
-            }}
-          >
-            View All Products
-          </Button>
-        </Box>
-      </Container>
+      {/* Featured Products Section with Animation */}
+      <Box id="products">
+        <Fade in={isVisible.products} timeout={1500}>
+          <Container maxWidth="lg">
+            <Box sx={{ mb: 8 }}>
+              <Typography variant="h3" sx={{ mb: 4, fontFamily: 'Playfair Display, serif', textAlign: 'center' }}>
+                Featured Products
+              </Typography>
+              <Grid container spacing={4}>
+                {featuredProducts.map((product, index) => (
+                  <Grid item xs={12} sm={6} md={4} key={product.id}>
+                    <Zoom in={isVisible.products} style={{ transitionDelay: `${index * 200}ms` }}>
+                      <Card sx={{ 
+                        height: '100%', 
+                        display: 'flex', 
+                        flexDirection: 'column',
+                        transform: 'translateY(0)',
+                        transition: 'all 0.3s ease-in-out',
+                        '&:hover': {
+                          transform: 'translateY(-10px)',
+                          boxShadow: 6
+                        }
+                      }}>
+                        <CardMedia
+                          component="img"
+                          height="250"
+                          image={product.image}
+                          alt={product.name}
+                        />
+                        <CardContent sx={{ flexGrow: 1 }}>
+                          <Typography variant="overline" display="block" color="primary">
+                            {product.category}
+                          </Typography>
+                          <Typography gutterBottom variant="h5" component="div">
+                            {product.name}
+                          </Typography>
+                          <Typography variant="body2" color="text.secondary">
+                            {product.description}
+                          </Typography>
+                          <Typography variant="h6" sx={{ mt: 2, color: '#c7923e' }}>
+                            ${product.price}
+                          </Typography>
+                          <Button 
+                            variant="contained" 
+                            sx={{ 
+                              mt: 2,
+                              backgroundColor: '#c7923e',
+                              '&:hover': {
+                                backgroundColor: '#a67934'
+                              }
+                            }}
+                            onClick={() => handleBuyOnEtsy(product.etsyUrl)}
+                            fullWidth
+                          >
+                            Buy on Etsy
+                          </Button>
+                        </CardContent>
+                      </Card>
+                    </Zoom>
+                  </Grid>
+                ))}
+              </Grid>
+            </Box>
+          </Container>
+        </Fade>
+      </Box>
 
-      {/* Footer */}
+      {/* Categories Preview with Animation */}
+      <Box id="categories">
+        <Fade in={isVisible.categories} timeout={1000}>
+          <Box sx={{ mb: 8, px: { xs: 0, md: 0 } }}>
+            <Typography variant="h3" sx={{ mb: 4, fontFamily: 'Playfair Display, serif', textAlign: 'center' }}>
+              Explore Our Categories
+            </Typography>
+            <Grid container spacing={0}>
+              {categoryImages.map((category, index) => (
+                <Grid item xs={12} sm={6} md={3} key={category.name}>
+                  <Zoom in={isVisible.categories} style={{ transitionDelay: `${index * 200}ms` }}>
+                    <Paper
+                      sx={{
+                        position: 'relative',
+                        height: 300,
+                        overflow: 'hidden',
+                        cursor: 'pointer',
+                        borderRadius: 0,
+                        transform: 'scale(1)',
+                        transition: 'all 0.3s ease-in-out',
+                        '&:hover': {
+                          transform: 'scale(1.05)',
+                          '& .overlay': {
+                            backgroundColor: 'rgba(0, 0, 0, 0.3)',
+                          },
+                          '& .category-content': {
+                            transform: 'translateY(-10px)',
+                          }
+                        }
+                      }}
+                      onClick={() => router.push('/products')}
+                    >
+                      <Box
+                        sx={{
+                          position: 'relative',
+                          width: '100%',
+                          height: '100%',
+                        }}
+                      >
+                        <Image
+                          src={category.image}
+                          alt={category.name}
+                          fill
+                          style={{
+                            objectFit: 'cover',
+                            objectPosition: 'center',
+                          }}
+                          sizes="(max-width: 768px) 100vw, 25vw"
+                        />
+                        <Box
+                          className="overlay"
+                          sx={{
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            transition: 'all 0.3s ease-in-out'
+                          }}
+                        >
+                          <Box
+                            className="category-content"
+                            sx={{
+                              textAlign: 'center',
+                              transition: 'transform 0.3s ease-in-out',
+                              color: 'white'
+                            }}
+                          >
+                            <Typography 
+                              variant="h5" 
+                              sx={{ 
+                                fontWeight: 'bold',
+                                mb: 1,
+                                fontFamily: 'Playfair Display'
+                              }}
+                            >
+                              {category.name}
+                            </Typography>
+                            <Typography 
+                              variant="body1"
+                              sx={{
+                                opacity: 0.9
+                              }}
+                            >
+                              {category.description}
+                            </Typography>
+                          </Box>
+                        </Box>
+                      </Box>
+                    </Paper>
+                  </Zoom>
+                </Grid>
+              ))}
+            </Grid>
+          </Box>
+        </Fade>
+      </Box>
+
+      {/* Call to Action with Animation */}
+      <Box id="cta">
+        <Grow in={isVisible.cta} timeout={1000}>
+          <Container maxWidth="lg">
+            <Box 
+              sx={{ 
+                textAlign: 'center',
+                py: 8,
+                px: { xs: 2, md: 4 },
+                backgroundColor: '#faf6f1',
+                borderRadius: 2,
+                mb: 4,
+                transform: 'translateY(0)',
+                transition: 'transform 0.3s ease-in-out',
+                '&:hover': {
+                  transform: 'translateY(-5px)'
+                }
+              }}
+            >
+              <Typography variant="h4" gutterBottom sx={{ fontFamily: 'Playfair Display, serif' }}>
+                Explore Our Full Collection
+              </Typography>
+              <Typography variant="body1" color="text.secondary" sx={{ mb: 4, maxWidth: 600, mx: 'auto' }}>
+                Discover our complete range of authentic Moroccan cookware, spices, and accessories. 
+                Transform your kitchen with traditional Moroccan craftsmanship.
+              </Typography>
+              <Button 
+                variant="contained" 
+                size="large"
+                onClick={() => router.push('/products')}
+                sx={{
+                  px: 4,
+                  py: 1.5,
+                  fontSize: '1.1rem',
+                  backgroundColor: '#c7923e',
+                  '&:hover': {
+                    backgroundColor: '#a67934'
+                  }
+                }}
+              >
+                View All Products
+              </Button>
+            </Box>
+          </Container>
+        </Grow>
+      </Box>
+
       <Footer />
     </Box>
   );

@@ -90,7 +90,7 @@ export default function Contact() {
                         Phone
                       </Typography>
                       <Typography variant="body1">
-                        +1 (555) 123-4567
+                        +212 522-123456
                       </Typography>
                     </Box>
                   </Box>
@@ -104,9 +104,9 @@ export default function Contact() {
                         Showroom
                       </Typography>
                       <Typography variant="body1">
-                        123 Market Street
+                        27 Boulevard Mohammed V
                         <br />
-                        San Francisco, CA 94105
+                        Casablanca 20250, Morocco
                       </Typography>
                     </Box>
                   </Box>
@@ -195,13 +195,15 @@ export default function Contact() {
             </Typography>
             <Typography variant="body1" paragraph>
               Experience our collection of handcrafted Moroccan kitchenware in person. 
-              Our showroom features a curated selection of our finest pieces, and our 
-              knowledgeable staff is here to help you find the perfect additions to your kitchen.
+              Our showroom in the heart of Casablanca features a curated selection of our finest pieces, 
+              and our knowledgeable staff is here to help you find the perfect additions to your kitchen.
             </Typography>
             <Typography variant="body1">
-              Hours: Monday - Saturday, 10:00 AM - 6:00 PM
+              Hours: Monday - Saturday, 9:00 AM - 7:00 PM
               <br />
-              Sunday: By appointment only
+              Friday: 2:30 PM - 7:00 PM
+              <br />
+              Sunday: Closed
             </Typography>
           </Paper>
         </Box>

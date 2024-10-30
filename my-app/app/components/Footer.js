@@ -63,12 +63,12 @@ export default function Footer() {
               Email: artisans@moroccankitchen.com
             </Typography>
             <Typography variant="body2" sx={{ mb: 1 }}>
-              Phone: +1 (555) 123-4567
+              Phone: +212 522-123456
             </Typography>
             <Typography variant="body2">
-              Showroom: 123 Market Street
+              Showroom: 27 Boulevard Mohammed V
               <br />
-              San Francisco, CA 94105
+              Casablanca 20250, Morocco
             </Typography>
           </Grid>
         </Grid>

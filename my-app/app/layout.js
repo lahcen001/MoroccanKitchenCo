@@ -13,19 +13,24 @@ import {
   List,
   ListItem,
   ListItemText,
+  ListItemIcon,
   useMediaQuery,
   useTheme
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
+import HomeIcon from '@mui/icons-material/Home';
+import StoreIcon from '@mui/icons-material/Store';
+import InfoIcon from '@mui/icons-material/Info';
+import ContactMailIcon from '@mui/icons-material/ContactMail';
 import Link from 'next/link';
 import Image from 'next/image';
 
 const navItems = [
-  { label: 'Home', path: '/' },
-  { label: 'Products', path: '/products' },
-  { label: 'About', path: '/about' },
-  { label: 'Contact', path: '/contact' }
+  { label: 'Home', path: '/', icon: <HomeIcon /> },
+  { label: 'Products', path: '/products', icon: <StoreIcon /> },
+  { label: 'About', path: '/about', icon: <InfoIcon /> },
+  { label: 'Contact', path: '/contact', icon: <ContactMailIcon /> }
 ];
 
 function NavBar() {
@@ -67,6 +72,9 @@ function NavBar() {
               }
             }}
           >
+            <ListItemIcon sx={{ color: '#c7923e', minWidth: 40 }}>
+              {item.icon}
+            </ListItemIcon>
             <ListItemText 
               primary={item.label} 
               primaryTypographyProps={{
@@ -136,11 +144,15 @@ function NavBar() {
                   color="inherit" 
                   component={Link} 
                   href={item.path}
+                  startIcon={item.icon}
                   sx={{ 
                     color: '#2b2b2b',
                     fontSize: '1.1rem',
                     '&:hover': {
                       backgroundColor: 'rgba(0,0,0,0.05)'
+                    },
+                    '& .MuiSvgIcon-root': {
+                      color: '#c7923e'
                     }
                   }}
                 >

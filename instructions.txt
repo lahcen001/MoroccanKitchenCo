@@ -1,0 +1,14 @@
+create a new project moroccan kitchen company as ecommerce website with the following features:
+
+1. Home page
+2. About page
+3. Contact page
+4. Products page
+5. Blog page
+6. Login page
+7. Register page
+8. Cart page
+9. Checkout page
+10. Thank you page
+
+i
