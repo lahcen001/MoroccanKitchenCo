@@ -63,7 +63,7 @@ export default function Contact() {
                 </Typography>
                 <Typography variant="body1" paragraph>
                   Have questions about our artisanal products or interested in becoming a partner? 
-                  We'd love to hear from you.
+                  We&apos;d love to hear from you.
                 </Typography>
 
                 <Box sx={{ mt: 4 }}>

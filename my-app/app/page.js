@@ -280,10 +280,10 @@ export default function Home() {
                   </Typography>
                   <Typography variant="body1" paragraph>
                     Immerse yourself in the rich traditions of Moroccan craftsmanship. Our carefully curated collection 
-                    brings the authentic artistry of Morocco's finest artisans directly to your kitchen.
+                    brings the authentic artistry of Morocco s finest artisans directly to your kitchen.
                   </Typography>
                   <Typography variant="body1" paragraph>
-                    Each piece in our collection is handpicked from skilled artisans in Morocco's historic 
+                    Each piece in our collection is handpicked from skilled artisans in Morocco s historic 
                     craft centers, ensuring you receive only the finest quality traditional kitchenware. 
                     Every item tells a story of generations of expertise and cultural heritage.
                   </Typography>

@@ -25,6 +25,7 @@ import InfoIcon from '@mui/icons-material/Info';
 import ContactMailIcon from '@mui/icons-material/ContactMail';
 import Link from 'next/link';
 import Image from 'next/image';
+import { Playfair_Display } from 'next/font/google';
 
 const navItems = [
   { label: 'Home', path: '/', icon: <HomeIcon /> },
@@ -32,6 +33,12 @@ const navItems = [
   { label: 'About', path: '/about', icon: <InfoIcon /> },
   { label: 'Contact', path: '/contact', icon: <ContactMailIcon /> }
 ];
+
+const playfairDisplay = Playfair_Display({
+  subsets: ['latin'],
+  display: 'swap',
+  weight: ['400', '500', '600', '700']
+});
 
 function NavBar() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -121,7 +128,6 @@ function NavBar() {
             </Box>
           </Link>
 
-          {/* Mobile Menu Icon */}
           {isMobile ? (
             <IconButton
               color="inherit"
@@ -136,7 +142,6 @@ function NavBar() {
               <MenuIcon />
             </IconButton>
           ) : (
-            /* Desktop Navigation */
             <Box sx={{ display: 'flex', gap: 2 }}>
               {navItems.map((item) => (
                 <Button 
@@ -164,14 +169,13 @@ function NavBar() {
         </Toolbar>
       </Container>
 
-      {/* Mobile Drawer */}
       <Drawer
         variant="temporary"
         anchor="right"
         open={mobileOpen}
         onClose={handleDrawerToggle}
         ModalProps={{
-          keepMounted: true // Better open performance on mobile.
+          keepMounted: true
         }}
         sx={{
           display: { xs: 'block', md: 'none' },
@@ -186,13 +190,7 @@ function NavBar() {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <head>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap"
-          rel="stylesheet"
-        />
-      </head>
+    <html lang="en" className={playfairDisplay.className}>
       <body style={{ margin: 0 }}>
         <NavBar />
         <Box sx={{ pt: '90px' }}>{children}</Box>
